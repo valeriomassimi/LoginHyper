@@ -1,0 +1,24 @@
+<div class="panel panel-primary">
+  <div class="panel-heading" ><h2>User Operation</h2> 
+  <p>Use this form to register your patent</p>
+  </div>
+  <div class="panel-body">
+    <form #patentForm="ngForm"  novalidate>
+      <div class="form-group">
+        <label>Company</label>
+        <input name="company" type="text" class="form-control" [(ngModel)]="patentModel.company" required id="company" >
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input name="name" type="text" class="form-control" [(ngModel)]="patentModel.name" required id="name" >
+      </div>
+      <div class=form-group>
+        <label>Description</label>
+        <textarea name="description"id="Description" type="text" class="form-control" cols="30" rows="10"
+          [(ngModel)]="patentModel.description" required id="description" ></textarea>
+      </div>
+      <!--<img src="../ass" style="width: 30" height="30">-->
+      <button  [disabled]="patentForm.form.invalid"  (click)='recordPatent(patentModel)' class="btn btn-primary">Record</button>
+    </form>
+  </div>
+</div>

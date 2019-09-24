@@ -1,0 +1,23 @@
+<div class="panel panel-primary">
+  <div class="panel-heading" ><h2>Validator Operation</h2>
+  
+  </div>
+  <div class="panel-body">
+
+    <!-- <button class="btn btn-primary" (click)="validatePatent()">Validate patent</button>-->
+    <ul *ngFor="let patent of patentService.patents" (click)="onSelect(patent)">
+      <div class="card">
+
+        <h3 class="card-title">{{patent.Record.company | uppercase}}</h3>
+
+        <p>{{patent.Record.inventor}}</p>
+
+        <p>{{patent.Record.description}}</p>
+
+        <!-- <button class="btn btn-primary" (click)="validatePatent()">Validate patent</button>-->
+      </div>
+    </ul>
+    <button class="btn btn-primary" (click)="getPatents()">Query all patents</button>
+
+  </div>
+</div>
