@@ -9,6 +9,7 @@ import { User } from '@/_models';
 export class UserService {
 
     apiUrl: 'http://localhost:4000';
+    private baseUrl = "http://192.168.100.181:8080/api"
 
   constructor(private http: HttpClient) { }
 
@@ -31,4 +32,15 @@ export class UserService {
     delete(id: number) {
         return this.http.delete(this.apiUrl+`/users/${id}`);
     }
+
+    registerLedger(user : User) {
+
+        return this.http.post(this.baseUrl + "/registeruser", user).subscribe(
+    
+          data => console.log('succes', data),
+    
+          error => console.log('eroro', error)
+    
+        );
+}
 }

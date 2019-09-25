@@ -1,21 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Patent } from '../_models';
+
+import { AlertService } from './alert.service';
+import { PatentNew } from "@/_models";
+
+import {  User} from "@/_models";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordpatentService {
 
+   //data={'patent':Patent,'patentusername':string};
+
   baseUrl= "http://192.168.100.181:8080/api"
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private alertService:AlertService,
+    ) { }
 
-  recordPatent(patent: Patent) {
+
+  recordPatent(patent: PatentNew) {
+
     console.log(JSON.stringify(patent));
-    this.http.post(this.baseUrl + "/recordpatent/", patent).subscribe(
+    this.http.post(this.baseUrl + "/recordpatent/",patent).subscribe(
 
-      data => console.log('succes', data),
-      error => console.log('eroro', error)
+      data => {
+        
+        console.log('succes', data);
+      this.alertService.success('Patent added',true)
+      },
+
+      error =>{ console.log('eroro', error);
+      this.alertService.error(error)
+
+
+      }
     )
   }
 }

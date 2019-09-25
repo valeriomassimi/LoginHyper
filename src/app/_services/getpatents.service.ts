@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Patent } from "@/_models";
 import { Observable } from 'rxjs';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,11 @@ export class GetpatentsService {
 
   patents: Patent[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private alertService: AlertService
+  ) { }
 
-  getPatents(){
+  getPatents() {
     this.http.get(this.baseUrl + '/queryall').subscribe(res => {
       this.addPatent(res)
       return this.patents
@@ -27,7 +30,7 @@ export class GetpatentsService {
 
   addPatent(result) {
     return this.patents = result
-    
+
   }
 
 
@@ -36,9 +39,17 @@ export class GetpatentsService {
     //console.log(JSON.stringify(this.validatedPatent))
     return this.http.put(this.baseUrl + "/validatepatent/", patent).subscribe(
 
-      data => console.log('succes', data),
-      error => console.log('eroro', error)
+      data => {
 
+        console.log('succes', data);
+        this.alertService.success('Patent validated', true)
+      },
+
+
+      error => {
+        console.log('eroro', error);
+        this.alertService.error('error')
+      }
     )
 
   }

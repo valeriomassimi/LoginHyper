@@ -10,6 +10,7 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
+   
 
     constructor(
         private formBuilder: FormBuilder,
@@ -46,6 +47,7 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
+        this.userService.registerLedger(this.registerForm.value)
         this.userService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(
