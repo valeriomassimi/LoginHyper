@@ -5,6 +5,7 @@ import { AlertService } from './alert.service';
 import { PatentNew } from "@/_models";
 
 import {  User} from "@/_models";
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -17,6 +18,7 @@ export class RecordpatentService {
   baseUrl= "http://192.168.100.181:8080/api"
   constructor(private http: HttpClient,
     private alertService:AlertService,
+    private router:Router
     ) { }
 
 
@@ -26,14 +28,14 @@ export class RecordpatentService {
     this.http.post(this.baseUrl + "/recordpatent/",patent).subscribe(
 
       data => {
-        
+      
         console.log('succes', data);
-      this.alertService.success('Patent added',true)
+        this.alertService.success('Patent added',true)
+        this.router.navigate(['']);
       },
 
       error =>{ console.log('eroro', error);
       this.alertService.error(error)
-
 
       }
     )
