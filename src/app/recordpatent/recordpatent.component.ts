@@ -22,7 +22,7 @@ export class RecordpatentComponent implements OnInit {
 
   constructor(private patentService: RecordpatentService,
     private authenticationService:AuthenticationService,
-    private alertService:AlertService,
+  
     private router:Router
   ) { }
 
@@ -38,7 +38,6 @@ export class RecordpatentComponent implements OnInit {
   async recordPatent(patentModel) {
    patentModel.username = await this.getCurrUser()
     this.patentService.recordPatent(patentModel)
-    this.alertService.success('Patent added',true)
     this.patentForm.resetForm()
   
   }

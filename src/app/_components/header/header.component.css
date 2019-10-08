@@ -1,3 +1,14 @@
 #username{
-    text-transform: uppercase
+    text-transform: uppercase;
+    color: black
+}
+
+#logout{
+    
+    color: black
+}
+
+.navbar{
+padding: 0.75rem 0.75rem;
+
 }

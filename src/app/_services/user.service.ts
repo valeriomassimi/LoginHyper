@@ -9,7 +9,7 @@ import { User } from '@/_models';
 export class UserService {
 
     apiUrl: 'http://localhost:4000';
-    private baseUrl = "http://192.168.100.181:8080/api"
+    private baseUrl = "http://192.168.100.166:8080/api"
 
   constructor(private http: HttpClient) { }
 

@@ -17,7 +17,7 @@ export class ValidatepatentComponent implements OnInit {
   closeResult: string;
 
   constructor(private patentService: GetpatentsService,
-    private alertService: AlertService,
+
     private authenticationService: AuthenticationService
     ) { }
 
@@ -28,13 +28,14 @@ export class ValidatepatentComponent implements OnInit {
   
         }
 
-  getPatents() {
-    console.log(this.patentService.getPatents())
-    this.patentService.getPatents()
+   getPatents(patent: Patent) {
+    //patent.username=await this.getCurrUser()
+    this.patentService.getPatents(patent)
   };
 
   async onSelect(patent: PatentNew) {
     patent.username=await this.getCurrUser()
     this.patentService.validatePatent(patent)
+    
   }
 }

@@ -1,6 +1,7 @@
+<div class="container mx mx-auto p-5" style="width: 50rem">
 <div class="panel panel-primary">
   <div class="panel-heading" ><h2>User Operation</h2> 
-  <p>Use this form to register your patent</p>
+  <p>Use this form to record your patent</p>
   </div>
   <div class="panel-body">
     <form #patentForm="ngForm"  novalidate>
@@ -17,8 +18,9 @@
         <textarea name="description"id="Description" type="text" class="form-control" cols="30" rows="10"
           [(ngModel)]="patentModel.description" required id="description" ></textarea>
       </div>
-      <!--<img src="../ass" style="width: 30" height="30">-->
-      <button  style="margin-bottom:15px" [disabled]="patentForm.form.invalid"  (click)='recordPatent(patentModel)' class="btn btn-primary" >Record</button>
+      <div class="text-center">
+      <button class="btn btn-primary text-center bg-info " style="margin-bottom:15px" [disabled]="patentForm.form.invalid"  (click)='recordPatent(patentModel)' >Record</button>
+      </div>
     </form>
   </div>
-</div>
+</div></div>

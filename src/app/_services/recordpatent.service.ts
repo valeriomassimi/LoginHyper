@@ -15,7 +15,7 @@ export class RecordpatentService {
 
    //data={'patent':Patent,'patentusername':string};
 
-  baseUrl= "http://192.168.100.181:8080/api"
+  baseUrl= "http://192.168.100.166:8080/api"
   constructor(private http: HttpClient,
     private alertService:AlertService,
     private router:Router
