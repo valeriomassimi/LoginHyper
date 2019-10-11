@@ -17,8 +17,11 @@
         <label>Description</label>
         <textarea name="description"id="Description" type="text" class="form-control" cols="30" rows="10"
           [(ngModel)]="patentModel.description" required id="description" ></textarea>
-      </div>
+      </div> 
+      <div>Upload your patent <button  (click)="openUpDialog()">Upload File</button> </div>
+      
       <div class="text-center">
+       
       <button class="btn btn-primary text-center bg-info " style="margin-bottom:15px" [disabled]="patentForm.form.invalid"  (click)='recordPatent(patentModel)' >Record</button>
       </div>
     </form>

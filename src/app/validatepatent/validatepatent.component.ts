@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 //import { MatDialog,MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog'
-import { Patent } from '../_models'
+
 import { GetpatentsService } from '../_services/getpatents.service'
 import { AlertService, AuthenticationService } from "@/_services";
-import {PatentNew} from '../_models'
+import {Patent} from '../_models'
 
 @Component({
   selector: 'app-validatepatent',
@@ -12,7 +12,7 @@ import {PatentNew} from '../_models'
 })
 export class ValidatepatentComponent implements OnInit {
 
-  patent = new PatentNew('', '', '', false,"");
+  patent = new Patent('', '', '', false,"");
 
   closeResult: string;
 
@@ -33,7 +33,7 @@ export class ValidatepatentComponent implements OnInit {
     this.patentService.getPatents(patent)
   };
 
-  async onSelect(patent: PatentNew) {
+  async onSelect(patent: Patent) {
     patent.username=await this.getCurrUser()
     this.patentService.validatePatent(patent)
     

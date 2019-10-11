@@ -9,6 +9,15 @@ import { fakeBackendProvider } from './_helpers';
 import { AppComponent }  from './app.component';
 import { routing } from './app-routing.module';
 
+// import {
+//     MatButtonModule,
+//     MatDialogModule,
+//     MatListModule,
+//     MatProgressBarModule,
+//   } from '@angular/material';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { AlertComponent } from './_components/alert/alert.component';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeComponent } from './home/home.component';
@@ -18,6 +27,8 @@ import { RecordpatentComponent } from './recordpatent/recordpatent.component';
 import { ValidatepatentComponent } from './validatepatent/validatepatent.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { HeaderComponent } from './_components/header/header.component';
+import { DialogComponent } from "./dialog/dialog.component";
+import { DropzoneDirective } from './_directives/dropzone.directive';
 
 @NgModule({
     imports: [
@@ -25,6 +36,10 @@ import { HeaderComponent } from './_components/header/header.component';
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        NgbActiveModal,
+        NgbModal,
         routing
     ],
     declarations: [
@@ -36,8 +51,11 @@ import { HeaderComponent } from './_components/header/header.component';
         RecordpatentComponent,
         ValidatepatentComponent,
         ProfilesComponent,
-        HeaderComponent
+        HeaderComponent,
+        DialogComponent,
+        DropzoneDirective
     ],
+    entryComponents:[DialogComponent],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

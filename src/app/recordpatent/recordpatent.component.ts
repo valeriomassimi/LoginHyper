@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild,OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecordpatentService, AlertService } from '../_services'
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms'
 import { AuthenticationService } from "../_services";
-import {PatentNew} from '../_models'
+import { Patent } from '../_models'
+import { DialogComponent } from '@/dialog/dialog.component';
 
 @Component({
   selector: 'app-recordpatent',
@@ -16,32 +18,39 @@ export class RecordpatentComponent implements OnInit {
 
   @ViewChild('patentForm') patentForm: NgForm;
 
-  //patentModel = new Patent('', '', '', false);
-  patentModel = new PatentNew('', '', '', false,"");
   
+  patentModel = new Patent('', '', '', false,"");
+
 
   constructor(private patentService: RecordpatentService,
-    private authenticationService:AuthenticationService,
-  
-    private router:Router
+    private authenticationService: AuthenticationService,
+    public activeModal:NgbModal,
+    private router: Router,
+    
   ) { }
 
   ngOnInit() { }
 
 
 
-   getCurrUser(){
+  getCurrUser() {
     return this.authenticationService.currentUserUsername
-  
-        }
 
-  async recordPatent(patentModel) {
-   patentModel.username = await this.getCurrUser()
-    this.patentService.recordPatent(patentModel)
-    this.patentForm.resetForm()
-  
   }
 
+  async recordPatent(patentModel) {
+    patentModel.username = await this.getCurrUser()
+    this.patentService.recordPatent(patentModel)
+    this.patentForm.resetForm()
+
+  }
+
+  openUpDialog() {
+    let dialogRef = this.activeModal.open(DialogComponent, {
+  
+
+    })
+  }
 }
 
 

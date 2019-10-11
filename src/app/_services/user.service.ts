@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { User } from '@/_models';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserService {
     apiUrl: 'http://localhost:4000';
     private baseUrl = "http://192.168.100.166:8080/api"
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
     getAll() {
         return this.http.get<User[]>(this.apiUrl+`/users`);
@@ -35,7 +36,7 @@ export class UserService {
 
     registerLedger(user : User) {
 
-        return this.http.post(this.baseUrl + "/registeruser", user).subscribe(
+        return this.http.post(environment.apiUrl + "/registeruser", user).subscribe(
     
           data => console.log('succes', data),
     

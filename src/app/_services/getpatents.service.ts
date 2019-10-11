@@ -4,13 +4,13 @@ import { Patent, PatentNew } from "@/_models";
 import { Observable } from 'rxjs';
 import { AlertService } from './alert.service';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetpatentsService {
 
-  baseUrl = "http://192.168.100.166:8080/api"
   patents: Patent[];
 
   constructor(private http: HttpClient,
@@ -19,7 +19,7 @@ export class GetpatentsService {
   ) { }
 
   getPatents(patent:Patent) {
-    this.http.get(this.baseUrl + '/queryall').subscribe(res => {
+    this.http.get(environment.apiUrl + '/queryall').subscribe(res => {
       this.addPatent(res)
       return this.patents
       
@@ -40,7 +40,7 @@ export class GetpatentsService {
   validatePatent(patent: Patent) {
     console.log(patent)
     //console.log(JSON.stringify(this.validatedPatent))
-    return this.http.put(this.baseUrl + "/validatepatent/", patent).subscribe(
+    return this.http.put(environment.apiUrl + "/validatepatent/", patent).subscribe(
 
       data => {
 
