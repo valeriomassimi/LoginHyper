@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Patent, PatentNew } from "@/_models";
-import { Observable } from 'rxjs';
+import { Patent } from "@/_models";
 import { AlertService } from './alert.service';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -18,11 +17,10 @@ export class GetpatentsService {
     private router:Router
   ) { }
 
-  getPatents(patent:Patent) {
-    this.http.get(environment.apiUrl + '/queryall').subscribe(res => {
+  getPatents() {
+    this.http.get(environment.apiUrl + '/queryall/AndreaT').subscribe(res => {
       this.addPatent(res)
       return this.patents
-      
     },
       err => {
         console.log(err)
@@ -35,7 +33,6 @@ export class GetpatentsService {
     return this.patents = result
 
   }
-
 
   validatePatent(patent: Patent) {
     console.log(patent)

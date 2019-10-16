@@ -8,7 +8,6 @@ export class DropzoneDirective {
   @Output() dropped = new EventEmitter<FileList>();
   @Output() hovered = new EventEmitter<boolean>();
 
-
   @HostListener('drop', ['$event'])
   onDrop($event) {
     $event.preventDefault();
@@ -22,8 +21,8 @@ export class DropzoneDirective {
     this.hovered.emit(true);
   }
 
-  @HostListener('dragleave',['$event'])
-  onDragLeave($event){
+  @HostListener('dragleave', ['$event'])
+  onDragLeave($event) {
     $event.preventDefault();
     this.hovered.emit(false);
   }

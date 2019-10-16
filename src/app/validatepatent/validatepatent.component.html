@@ -1,39 +1,24 @@
-<!-- <div class="panel panel-default">
-  <div class="panel-heading" >Validator Operation</div>
-  <div class="panel-body">
 
-    <button class="btn btn-primary" (click)="validatePatent()">Validate patent</button>
-    <ul *ngFor="let patent of patentService.patents" (click)="onSelect(patent)">
-      <div class="card ">
-
-        <h3 class="card-title card-primary">{{patent.Record.company | uppercase}}</h3>
-
-        <p>{{patent.Record.inventor}}</p>
-
-        <p>{{patent.Record.description}}</p>
-
-        <button class="btn btn-primary" (click)="validatePatent()">Validate patent</button>
-      </div>
-    </ul>
-    <button class="btn btn-primary" (click)="getPatents()">Query all patents</button>
-
-  </div>
-</div> -->
-<div class="container mx mx-auto p-5" style="width: 60rem">
+<div class="container mx mx-auto p-2" style="width: 60rem;">
  
-<div class="card mx mx-auto" style="width: 60rem">
+<div class="card " style="border-radius:4px;border-width: 4px">
  
   <div class="card-body">
     <h2 class="card-title text-center">Validator Operation</h2>
+   
     <hr>
-    <ul *ngFor="let patent of patentService.patents" (click)="onSelect(patent)">
+
+    <ul *ngFor="let patent of patentService.patents">
+      <h5 *ngIf="patent.Record.length==0">No patents available</h5>
       <div class="card " style="border-radius:5px">
 
         <h3 class="card-title card-primary text-center">{{patent.Record.company | uppercase}}</h3>
 
-        <p class="text-center">{{patent.Record.inventor}}</p>
+        <p class="text-center">{{patent.Record.patentname}}</p>
 
         <p class="pl-3">{{patent.Record.description}}</p>
+
+        <p class="pl-3">#:{{patent.Record.hash}}</p>
 
         <button class="btn btn-success" (click)="validatePatent()">Validate patent</button>
       </div>

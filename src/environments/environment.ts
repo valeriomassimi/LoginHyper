@@ -4,8 +4,20 @@
 
 export const environment = {
   production: false,
-  apiUrl:"http://192.168.100.174:8080/api"
+  apiUrl:"http://192.168.100.179:8080/api",
+  firebaseConfig: {
+    apiKey: "AIzaSyBwnCZcM08Z_iDRGEbXEpOlCi82N_vnok8",
+    authDomain: "fire-85137.firebaseapp.com",
+    databaseURL: "https://fire-85137.firebaseio.com",
+    projectId: "fire-85137",
+    storageBucket: "fire-85137.appspot.com",
+    messagingSenderId: "7374958078",
+    appId: "1:7374958078:web:9e73e3fe79ec34c36124af"
+  }
+  
 };
+
+
 
 /*
  * For easier debugging in development mode, you can import the following file

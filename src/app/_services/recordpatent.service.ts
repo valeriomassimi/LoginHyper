@@ -7,6 +7,8 @@ import { Patent } from "@/_models";
 import {  User} from "@/_models";
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -33,10 +35,12 @@ export class RecordpatentService {
         this.router.navigate(['']);
       },
 
-      error =>{ console.log('eroro', error);
+      error =>{ console.error('eroro', error);
+      if(error)
       this.alertService.error(error)
 
       }
     )
   }
+
 }

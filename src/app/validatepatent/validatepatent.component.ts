@@ -28,14 +28,13 @@ export class ValidatepatentComponent implements OnInit {
   
         }
 
-   getPatents(patent: Patent) {
-    //patent.username=await this.getCurrUser()
-    this.patentService.getPatents(patent)
+    getPatents() {
+    this.patentService.getPatents()
   };
 
-  async onSelect(patent: Patent) {
-    patent.username=await this.getCurrUser()
+   validatePatent(patent: Patent){
+    //patent.username=await this.getCurrUser()
     this.patentService.validatePatent(patent)
-    
   }
+
 }
