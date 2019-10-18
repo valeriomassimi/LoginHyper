@@ -4,13 +4,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService, UserService, AuthenticationService } from '@/_services';
+import { database } from 'firebase';
 
-@Component({templateUrl: 'register.component.html'})
+@Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
-   
+
 
     constructor(
         private formBuilder: FormBuilder,
@@ -18,9 +19,9 @@ export class RegisterComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private userService: UserService,
         private alertService: AlertService
-    ) { 
+    ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
+        if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/']);
         }
     }
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
             lastName: ['', Validators.required],
             username: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(6)]],
-            role:['',Validators.required]
+            role: ['', Validators.required]
         });
     }
 
@@ -47,17 +48,22 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
+
         this.userService.registerLedger(this.registerForm.value)
-        this.userService.register(this.registerForm.value)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.alertService.success('Registration successful', true);
-                    this.router.navigate(['/login']);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
-    }
-}
+        .then(()=>this.userService.register(this.registerForm.value)
+                        .subscribe(data => {
+                            this.alertService.success('Registration successful', true);
+                            this.router.navigate(['/login']);
+                        },error=>{
+                            console.log('non registrato',error)
+                        } 
+                            )).catch( error=>{
+                                this.alertService.error(error);
+                                this.loading = false;
+                                this.registerForm.reset()
+                            })
+        
+                    
+                }
+            }
+            

@@ -8,8 +8,8 @@
    
     <hr>
 
-    <ul *ngFor="let patent of patentService.patents">
-      <h5 *ngIf="patent.Record.length==0">No patents available</h5>
+    <ul *ngFor="let patent of patents">
+      <h5 *ngIf="patents.length==0">No patents available</h5>
       <div class="card " style="border-radius:5px">
 
         <h3 class="card-title card-primary text-center">{{patent.Record.company | uppercase}}</h3>
@@ -20,7 +20,7 @@
 
         <p class="pl-3">#:{{patent.Record.hash}}</p>
 
-        <button class="btn btn-success" (click)="validatePatent()">Validate patent</button>
+        <button class="btn btn-success" (click)="validatePatent(patent)">Validate patent</button>
       </div>
     </ul>    <div class="text-center">
     <button class="btn btn-primary text-center bg-info" type="input" (click)="getPatents()">Get Patents</button></div>

@@ -13,7 +13,6 @@ export class AlertComponent implements OnInit {
 
   private subscription: Subscription;
   message: any;
- // @ViewChild('alert') alert: ElementRef;
 
   constructor(private alertService: AlertService) { }
 
@@ -21,18 +20,10 @@ export class AlertComponent implements OnInit {
 
     this.subscription = this.alertService.getMessage().subscribe(message => {
       this.message = message;
-      //this.timeout()
+      setTimeout(() => this.message=false, 5000);
+      
     });
   }
-
-  // timeout() {
-
-  //   setTimeout(() => this.alert.nativeElement.classList.remove('show'), 4000);
-
-  // }
-
-
-
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

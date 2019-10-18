@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { GetpatentsService } from '../_services/getpatents.service'
 import { AlertService, AuthenticationService } from "@/_services";
 import {Patent} from '../_models'
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-validatepatent',
@@ -14,27 +16,59 @@ export class ValidatepatentComponent implements OnInit {
 
   patent = new Patent('', '', '', false,"");
 
-  closeResult: string;
+  //validator here is the username contained in the patent model
+  validator:string
+  response:any
+  patents:any[];
+
 
   constructor(private patentService: GetpatentsService,
-
-    private authenticationService: AuthenticationService
+    private alertService:AlertService,
+    private authenticationService: AuthenticationService,
+    private router:Router
     ) { }
 
-  ngOnInit( ) { }
+  ngOnInit() { this.getCurrUser() }
 
   getCurrUser(){
-    return this.authenticationService.currentUserUsername
+    this.validator= this.authenticationService.currentUserUsername
   
         }
 
-    getPatents() {
-    this.patentService.getPatents()
+    getPatents(validator:string) {
+    validator=this.validator
+    this.patentService.getPatents(validator).subscribe(res => {
+        this.addPatent(res)  ;
+        console.log(this.patents)
+        return this.patents
+      
+      },
+        err => {
+          console.log(err)
+          this.alertService.error(err)
+        }
+      )
   };
 
-   validatePatent(patent: Patent){
-    //patent.username=await this.getCurrUser()
-    this.patentService.validatePatent(patent)
+  addPatent(result) {
+    return this.patents = result
   }
+
+   validatePatent(patent: Patent){
+    patent.username= this.validator
+    this.patentService.validatePatent(patent)
+    .subscribe(
+
+      data => {
+        console.log('succes', data);
+        this.alertService.success('Patent validated', true)
+        this.router.navigate(['']);
+      },
+
+      error => {
+        console.log('eroro', error);
+        this.alertService.error(error)
+      }
+    )}
 
 }

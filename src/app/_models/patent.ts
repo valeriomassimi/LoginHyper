@@ -8,4 +8,5 @@ export class Patent {
         public username?:string,
         public fileInfo?:string
     ){}
-}
+
+} 

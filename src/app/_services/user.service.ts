@@ -36,12 +36,7 @@ export class UserService {
 
     registerLedger(user : User) {
 
-        return this.http.post(environment.apiUrl + "/registeruser", user).subscribe(
-    
-          data => console.log('succes', data),
-    
-          error => console.log('eroro', error)
-    
-        );
+        return this.http.post(environment.apiUrl + "/registeruser", user) .toPromise()
+   
 }
 }

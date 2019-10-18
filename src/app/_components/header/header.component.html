@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand navbar-info bg-info" *ngIf="currentUser">
+<nav class="navbar navbar-expand navbar-info " style="background-color: #3e9adb;" *ngIf="currentUser">
   <a class="navbar-brand" href="/">Hyper</a>
-  <a class="navbar-item nav-link" routerLink="/profiles">Profiles</a>
+  <a class="navbar-item nav-link" style="visibility:unset;" routerLink="/profiles">Profiles</a>
   <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-    <a class="navbar-item nav-link"  id="username"> {{currentUser.username}}</a>
+    <a class="navbar-item nav-link"  id="username"> {{currentUser.username}} [{{currentUser.role}}]</a>
     <a class="navbar-item nav-link" id="logout"(click)="logout()">Logout</a>
   </ul>
-</nav>
+</nav>                            
