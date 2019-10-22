@@ -7,9 +7,9 @@
     <h2 class="card-title text-center">Validator Operation</h2>
    
     <hr>
-
-    <ul *ngFor="let patent of patents">
-      <h5 *ngIf="patents.length==0">No patents available</h5>
+ <h5 *ngIf="pressed && patents.length==0" class="p-3 text-center">No patents available!</h5>
+    <ul *ngFor="let patent of patents ">
+     
       <div class="card " style="border-radius:5px">
 
         <h3 class="card-title card-primary text-center">{{patent.Record.company | uppercase}}</h3>
@@ -19,6 +19,8 @@
         <p class="pl-3">{{patent.Record.description}}</p>
 
         <p class="pl-3">#:{{patent.Record.hash}}</p>
+
+        <button (click)="downloadFile(patent.Record.company+patent.Record.hash)">Download File</button>
 
         <button class="btn btn-success" (click)="validatePatent(patent)">Validate patent</button>
       </div>

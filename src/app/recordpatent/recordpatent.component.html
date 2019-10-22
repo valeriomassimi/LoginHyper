@@ -1,57 +1,72 @@
 <div class="container mx mx-auto p-2" style="width: 60rem">
-    <div class="card" style="border-radius:4px;border-width: 4px;padding: 15px;" >
+  <div class="card" style="border-radius:4px;border-width: 4px;padding: 15px;">
 
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h2>User Operation</h2>
-      <p>Use this form to insert your patent information and upload the corresponding file</p>
-    </div>
-    <div class="panel-body">
-      <form #patentForm="ngForm" novalidate>
-        <div class="form-group">
-          <label>Company</label>
-          <input name="company" type="text" class="form-control" [(ngModel)]="patentModel.company" required
-            id="company">
-        </div>
-        <div class="form-group">
-          <label>PatentName</label>
-          <input name="name" type="text" class="form-control" [(ngModel)]="patentModel.name" required id="name">
-        </div>
-        <div class=form-group>
-          <label>Description</label>
-          <textarea name="description" id="Description" type="text" class="form-control" cols="30" rows="3"
-            [(ngModel)]="patentModel.description" required id="description"></textarea>
-        </div>
-        <div class="dropzone" dropzone (hovered)="toggleHover($event)" (dropped)="onDrop($event)"
-          [class.hovering]="isHovering">
-
-          <h4>Upload your file</h4>
-          <p>Drag and Drop</p>
-          <label class="file-label">
-          <input type="file" #file style="display:none" (change)="onDrop($event.target.files)" multiple>
-       
-        <span class="file-cta">
-            <span class="file-icon">
-              <i class="fa fa-upload"></i>
-            </span>
-            <span class="file-label">
-              <h6>or Click here...</h6>
-            </span>
-          </span>
-        </label>
-
+    <div class="card-body">
+      <div class="card-title">
+        <h2>User Operation</h2>
+        <p>Use this form to insert your patent information and upload the corresponding file</p>
       </div>
-        <p *ngIf=fileUp>File Uploads</p>
-        <div *ngFor="let file of files">
-          <upload-task [file]="file"></upload-task>
-        </div>
+      
+        <form #patentForm="ngForm" novalidate>
+          <div class="form-group">
+            <label>Company</label>
+            <input name="company" type="text" class="form-control" [(ngModel)]="patentModel.company" required
+              id="company">
+          </div>
+          <div class="form-group">
+            <label>PatentName</label>
+            <input name="name" type="text" class="form-control" [(ngModel)]="patentModel.name" required id="name">
+          </div>
+          <div class=form-group>
+            <label>Description</label>
+            <textarea name="description" id="Description" type="text" class="form-control" cols="30" rows="3"
+              [(ngModel)]="patentModel.description" required id="description"></textarea>
+          </div>
+          <div class="dropzone" dropzone (hovered)="toggleHover($event)" (dropped)="onDrop($event)"
+            [class.hovering]="isHovering">
 
-        <div class="text-center">
-          <button class="btn btn-primary text-center bg-info " style="margin-bottom:15px;margin-top:15px"
-            [disabled]="patentForm.form.invalid || !fileUp" (click)='recordPatent(patentModel)'>Record</button>
-        </div>
-      </form>
+            <h4>Upload your file</h4>
+            <p>Drag and Drop</p>
+            <label class="file-label">
+              <input type="file" #file style="display:none" (change)="onDrop($event.target.files)" multiple>
+
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fa fa-upload"></i>
+                </span>
+                <span class="file-label">
+                  <h6>or Click here...</h6>
+                </span>
+              </span>
+            </label>
+
+          </div>
+
+          <!--file upload part--> 
+
+          <div *ngIf=fileUp>
+            <p>File Uploads</p>
+            <div class="progress" *ngIf="percentage | async as pct">
+              <div class="progress-bar progress-bar-striped bg-info " role="progressbar" aria-valuenow="pct"
+                aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: pct + '%'}">
+              </div>
+
+            </div>
+            <p *ngIf="percentage | async as pct">{{pct | number}}% - {{file.name}}</p>
+          </div>
+
+          <!-- <p *ngIf=fileUp>File Uploads</p>
+          <div *ngFor="let file of files">
+            <upload-task [file]="file"></upload-task>
+          </div>
+   -->
+          <!-- -->
+
+          <div class="text-center">
+            <button class="btn btn-primary text-center bg-info " style="margin-bottom:15px;margin-top:15px"
+              [disabled]="patentForm.form.invalid || !fileUp" (click)='recordPatent(patentModel)'>Record</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-  </div>
-</div>

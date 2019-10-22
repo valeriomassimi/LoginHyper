@@ -17,8 +17,9 @@ export class GetpatentsService {
   constructor(private http: HttpClient,
   ) { }
 
-  getPatents(validator:string) {
-     return this.http.get(environment.apiUrl + '/queryall/'+validator)
+  getPatents(validator:string):Observable<Patent[]>{
+     return this.http.get<Patent[]>(environment.apiUrl + '/queryall/'+validator)
+     
     //.pipe(map(res=>{
     //   return res.json().results.map(patent=>{
     //     console.log(patent)

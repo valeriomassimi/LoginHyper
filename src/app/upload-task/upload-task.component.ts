@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, ErrorHandler } from '@angular/core';
+import { Component, OnInit, Input, ErrorHandler, EventEmitter, Output } from '@angular/core';
 import { AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable } from 'rxjs';
-import { finalize, tap } from 'rxjs/operators';
-import { UserService, AuthenticationService } from '@/_services';
+import { finalize } from 'rxjs/operators';
+import {  AuthenticationService } from '@/_services';
 import * as hash from 'hash.js'
 
 @Component({
@@ -14,6 +14,8 @@ import * as hash from 'hash.js'
 export class UploadTaskComponent implements OnInit {
 
   @Input() file: File;
+  @Input() company:string
+  @Output() uploadOk=new EventEmitter<any>();
 
   task: AngularFireUploadTask;
 
@@ -21,7 +23,7 @@ export class UploadTaskComponent implements OnInit {
   snapshot: Observable<any>
   downloadURL: string
   username:string
-  hash:string=""
+  hash:string
 
   constructor(private storage: AngularFireStorage,
     private db: AngularFirestore,
@@ -29,7 +31,7 @@ export class UploadTaskComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.startUpload()
+    //this.startUpload()
   }
 
   getCurrUser() {
@@ -43,7 +45,7 @@ export class UploadTaskComponent implements OnInit {
 
     this.hash=hash.sha256().update(this.file.name + this.file.lastModified + this.file.type).digest('hex')
 
-    const path = `patents/${this.username}/${this.hash}/${this.file.name}`;
+    const path = `patents/${this.company}/${this.hash}/${this.file.name}`;
 
     const ref = this.storage.ref(path);
 
@@ -53,15 +55,15 @@ export class UploadTaskComponent implements OnInit {
 
     // console.log(this.downloadURL = await ref.getDownloadURL().toPromise());
     // this.db.collection('patents').add({ downloadURL: this.downloadURL, path }).catch(error=>{console.error(error)})
-
+    this.uploadOk.emit();
     this.snapshot = this.task.snapshotChanges().pipe(
       //tap(console.log),
       finalize(async () => {
         this.downloadURL = await ref.getDownloadURL().toPromise();
         console.log(this.downloadURL)
-        this.db.collection('patents').add({ downloadURL: this.downloadURL, path }).catch(error=>{console.error(error)})
+        this.db.collection('patents').add({ downloadURL: this.downloadURL, path })
+        .catch(error=>{console.error(error)})
       }),
-
     );
   }
 
