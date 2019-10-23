@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { HttpClient } from '@angular/common/http';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentSnapshot } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 
@@ -26,6 +26,8 @@ export class ValidatepatentComponent implements OnInit {
   response: any
   patents: Patent[] = [];
   pressed: boolean = false;
+  patentsRef:any;
+  downloadURL:string
   //fileFirestore:Observable
 
   constructor(private patentService: GetpatentsService,
@@ -48,32 +50,39 @@ export class ValidatepatentComponent implements OnInit {
 
   }
 
-
   getPatents(validator: string) {
     validator = this.validator
     this.patentService.getPatents(validator)
       .subscribe(res => {
-        this.patents = res
+         this.patents=res
         console.log(this.patents)
         this.pressed = true
       })
-  }
-  //   },
-  //     err => {
-  //       console.log(err)
-  //       this.alertService.error(err)
-  //     }
-  //   )
-  // };
+   
+      err => {
+        console.log(err)
+        this.alertService.error(err)
+      }
+  };
 
 
   //download the file corresponding to the patent from fireabse storage to local
   downloadFile(path: string) {
+    console.log(path);
+    
+    this.patentsRef = this.db.collection("patents",
+    ref=>ref.where("path","==",path)).snapshotChanges();
 
-    var patentsRef = this.db.collection("/patents",
-    ref=>ref.where("path","==",path),
-    );
+    this.patentsRef.subscribe(doc=>{
+      this.downloadURL=doc[0].payload.doc._document.proto.fields.downloadURL.stringValue
+      this.patentService.getFirestoreFile(this.downloadURL).subscribe(
+        data=>{console.log(data);
+        }
+      )
+    })
+   
 
+   // var docRef=this.db.collection("patents").where()
   }
 
   validatePatent(patent: Patent) {
@@ -86,6 +95,7 @@ export class ValidatepatentComponent implements OnInit {
           this.alertService.success('Patent validated', true)
           this.getPatents(patent.username)
           this.router.navigateByUrl('');
+          this.getPatents(patent.username)
         },
 
         error => {
@@ -94,8 +104,5 @@ export class ValidatepatentComponent implements OnInit {
         }
       )
   }
-
-
-
 
 }

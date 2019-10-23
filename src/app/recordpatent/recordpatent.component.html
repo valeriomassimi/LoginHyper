@@ -44,7 +44,7 @@
 
           <!--file upload part--> 
 
-          <div *ngIf=fileUp>
+          <div *ngIf=recordPressed>
             <p>File Uploads</p>
             <div class="progress" *ngIf="percentage | async as pct">
               <div class="progress-bar progress-bar-striped bg-info " role="progressbar" aria-valuenow="pct"

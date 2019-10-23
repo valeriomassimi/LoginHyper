@@ -19,26 +19,20 @@ export class GetpatentsService {
 
   getPatents(validator:string):Observable<Patent[]>{
      return this.http.get<Patent[]>(environment.apiUrl + '/queryall/'+validator)
-     
-    //.pipe(map(res=>{
-    //   return res.json().results.map(patent=>{
-    //     console.log(patent)
-    //     return new Patent(
-    //       patent.company,
-    //       patent.name,
-    //       patent.description,
-    //       patent.fileInfo,
-    //     )
-    //   })
-  
     
   };
-
- 
 
   validatePatent(patent: Patent) {
     console.log(patent)
     return this.http.put(environment.apiUrl + "/validatepatent/", patent)
 
   }
+
+  getFirestoreFile(downloadURL:string){
+    return this.http.get(downloadURL);
+
+
+  }
+
+
 }
