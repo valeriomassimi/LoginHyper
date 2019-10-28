@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpResponse } from '@angular/common/http'
 import { Patent } from "@/_models";
 import { AlertService } from './alert.service';
 import { Router } from '@angular/router';
@@ -27,12 +27,5 @@ export class GetpatentsService {
     return this.http.put(environment.apiUrl + "/validatepatent/", patent)
 
   }
-
-  getFirestoreFile(downloadURL:string){
-    return this.http.get(downloadURL);
-
-
-  }
-
 
 }

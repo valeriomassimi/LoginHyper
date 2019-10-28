@@ -12,21 +12,19 @@
      
       <div class="card " style="border-radius:5px">
 
-        <h3 class="card-title card-primary text-center">{{patent.Record.company | uppercase}}</h3>
+        <h3 class="card-title card-primary text-center">{{patent.Record.name| uppercase}}</h3>
 
-        <p class="text-center">{{patent.Record.patentname}}</p>
+        <p class="text-center">Company: {{patent.Record.copmany}}</p>
 
         <p class="pl-3">{{patent.Record.description}}</p>
 
-        <p class="pl-3">#:{{patent.Record.hash}}</p>
+        <p class="pl-3">#: {{patent.Record.hash}}</p>
 
-        <button (click)="downloadFile('patents/'+patent.Record.company+'/'+patent.Record.hash+'/record.png')">Download File</button>
-        <div *ngFor="let p of patentsRef | async">
-          <p>{{downloadURL}}</p>
-          <!-- <td><a (click)="editOrder(o.$key)">Edit</a></td> -->
-        </div>
+        <p class="pl-3">fileName: {{patent.Record.filename}}
+          <img class="ml-5 pl-3 pt-2 pb-2" (click)="downloadFile('patents/'+patent.Record.company+'/'+patent.Record.hash+'/'+patent.Record.filename)" src="../../assets/download.png" id="downloadImg"style="width:64px;height:64px" alt="download">
 
-
+        </p>
+        
         <button class="btn btn-success" (click)="validatePatent(patent)">Validate patent</button>
       </div>
     </ul>    <div class="text-center">

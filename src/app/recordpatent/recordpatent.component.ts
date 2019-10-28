@@ -113,6 +113,7 @@ export class RecordpatentComponent implements OnInit {
     
     patentModel.username = await this.getCurrUser()
     patentModel.fileInfo = this.fileInfo
+    patentModel.fileName=this.file.name;
   
     this.patentService.recordPatent(patentModel)
       .subscribe(
@@ -155,8 +156,8 @@ export class RecordpatentComponent implements OnInit {
         console.log("downloadurl", this.downloadURL);
 
         this.db.collection('patents').add({ downloadURL: this.downloadURL, fileName: this.file.name, path }).catch(error => { console.error(error) })
-        setTimeout(()=>this.fileUp = false,4000)
-      }),
+       setTimeout(()=>this.recordPressed = false,7000)
+      })
 
     );
   }

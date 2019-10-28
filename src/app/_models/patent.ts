@@ -6,7 +6,8 @@ export class Patent {
         public description:string,
         public validation: boolean,
         public username?:string,
-        public fileInfo?:string
+        public fileInfo?:string,
+        public fileName?:string
     ){}
 
 } 

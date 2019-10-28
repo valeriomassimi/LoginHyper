@@ -1,16 +1,25 @@
 <nav class="navbar navbar-expand navbar-info " style="background-color: #1F9BCF;" *ngIf="currentUser">
   <a class="navbar-brand" href="/">Hyper</a>
-  <a class="navbar-item nav-link" style="visibility:unset;" routerLink="/profiles">Profiles</a>
+  
+  <a class="navbar-item nav-link" routerLink="/profiles" ><i class="fa fa-cog" style="color: black;"></i>
+    Profiles</a>
   <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
 
-    <!--dropdown profile logout to add-->
-      <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">{{currentUser.username}} [{{currentUser.role}}]</a>
-          <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-            <a class="dropdown-item" href="#">Logout</a>
-          </div>
-        </li> -->
-    <a class="navbar-item nav-link"  id="username"> {{currentUser.username}} [{{currentUser.role}}]</a>
-    <a class="navbar-item nav-link" id="logout"(click)="logout()">Logout</a>
+      <!-- <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Dropdown
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </div>
+         -->
+    <div class="navbar-item nav-link"  id="username"><i class="fa fa-user" style="color: black;"></i> {{currentUser.username}} [{{currentUser.role}}]</div>
+    <a class="navbar-item nav-link" id="logout"(click)="logout()" >Logout</a>
   </ul>
 </nav>                            

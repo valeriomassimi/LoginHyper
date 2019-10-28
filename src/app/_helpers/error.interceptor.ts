@@ -15,6 +15,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                 // auto logout if 401 response returned from api
                 this.authenticationService.logout();
                 location.reload(true);
+
+            }else if(err.status === 400){
+                err.error.message="Hyperledger Network not responding"
+
             }
             
             const error = err.error.message || err.statusText;

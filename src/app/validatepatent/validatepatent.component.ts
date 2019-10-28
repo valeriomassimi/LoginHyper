@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-//import { MatDialog,MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog'
 
 import { GetpatentsService } from '../_services/getpatents.service'
 import { AlertService, AuthenticationService } from "@/_services";
 import { Patent } from '../_models'
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { HttpClient } from '@angular/common/http';
-import { AngularFirestore, AngularFirestoreCollection, DocumentSnapshot } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { saveAs } from 'file-saver';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 
 @Component({
@@ -19,6 +20,8 @@ import { Observable } from 'rxjs';
 })
 export class ValidatepatentComponent implements OnInit {
 
+
+
   patent = new Patent('', '', '', false, "");
 
   //validator here is the username contained in the patent model
@@ -26,8 +29,10 @@ export class ValidatepatentComponent implements OnInit {
   response: any
   patents: Patent[] = [];
   pressed: boolean = false;
-  patentsRef:any;
-  downloadURL:string
+  patentsRef: any;
+  downloadURL: string
+  profileUrl: Observable<Blob | null>;
+  fileUrl;
   //fileFirestore:Observable
 
   constructor(private patentService: GetpatentsService,
@@ -35,7 +40,9 @@ export class ValidatepatentComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private router: Router,
     private db: AngularFirestore,
-    private http: HttpClient
+    private storage: AngularFireStorage,
+    private http: HttpClient,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -54,35 +61,29 @@ export class ValidatepatentComponent implements OnInit {
     validator = this.validator
     this.patentService.getPatents(validator)
       .subscribe(res => {
-         this.patents=res
+        this.patents = res
         console.log(this.patents)
         this.pressed = true
       })
-   
-      err => {
-        console.log(err)
-        this.alertService.error(err)
-      }
-  };
 
+    err => {
+      console.log(err)
+      this.alertService.error(err)
+    }
+  };
 
   //download the file corresponding to the patent from fireabse storage to local
   downloadFile(path: string) {
     console.log(path);
-    
-    this.patentsRef = this.db.collection("patents",
-    ref=>ref.where("path","==",path)).snapshotChanges();
 
-    this.patentsRef.subscribe(doc=>{
-      this.downloadURL=doc[0].payload.doc._document.proto.fields.downloadURL.stringValue
-      this.patentService.getFirestoreFile(this.downloadURL).subscribe(
-        data=>{console.log(data);
-        }
-      )
-    })
-   
+    const ref = this.storage.ref(path);
+    ref.getDownloadURL().subscribe(
+      file => {
+        window.open(file,"_blank")
 
-   // var docRef=this.db.collection("patents").where()
+      }
+
+    );
   }
 
   validatePatent(patent: Patent) {

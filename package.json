@@ -7,7 +7,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build": "ng build",
-    "start": "ng serve"
+    "start": "ng serve --proxy-config proxy.conf.json"
   },
   "private": true,
   "dependencies": {
@@ -26,9 +26,11 @@
     "@ng-bootstrap/ng-bootstrap": "^4.0.0",
     "angularfire2": "^5.2.1",
     "core-js": "^2.5.4",
+    "file-saver": "^2.0.2",
     "firebase": "^7.1.0",
     "hash.js": "^1.1.7",
     "md5": "^2.2.1",
+    "octicons": "^8.5.0",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
