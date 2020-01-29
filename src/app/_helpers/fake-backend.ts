@@ -39,6 +39,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // route functions
 
         function register() {
+
+            console.log("carenza");
+            
             const user = body
 
             if (users.find(x => x.username === user.username)) {
@@ -53,6 +56,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function authenticate() {
+
+            console.log("regno");
+
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
             if (!user) return error('Username or password is incorrect');
@@ -61,7 +67,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                token: 'fake-jwt-token',
                 role: user.role
             })
         }
@@ -101,7 +106,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function isLoggedIn() {
-            return headers.get('Authorization') === 'Bearer fake-jwt-token';
+            return headers.get('Authorization') != null;
         }
 
         function idFromUrl() {
@@ -116,4 +121,4 @@ export const fakeBackendProvider = {
     provide: HTTP_INTERCEPTORS,
     useClass: FakeBackendInterceptor,
     multi: true
-};
+}

@@ -10,22 +10,22 @@
  <h5 *ngIf="pressed && patents.length==0" class="p-3 text-center">No patents available!</h5>
     <ul *ngFor="let patent of patents" style="padding-left: 0;">
      
-      <div class="card " style="border-radius:5px">
+      <div *ngIf="!patent.Record.validation"class="card" style="border-radius:5px">
 
         <h3 class="card-title card-primary text-center">{{patent.Record.name| uppercase}}</h3>
 
-        <p class="text-center">Company: {{patent.Record.copmany}}</p>
+        <p class="text-center">Company: {{patent.Record.company| uppercase}}</p>
 
         <p class="pl-3">{{patent.Record.description}}</p>
 
         <p class="pl-3">#: {{patent.Record.hash}}</p>
 
         <p class="pl-3">fileName: {{patent.Record.filename}}
-          <img class="ml-5 pl-3 pt-2 pb-2" (click)="downloadFile('patents/'+patent.Record.company+'/'+patent.Record.hash+'/'+patent.Record.filename)" src="../../assets/download.png" id="downloadImg"style="width:64px;height:64px" alt="download">
+          <img class="ml-5 pl-3 pt-2 pb-2" (click)="downloadFile('patents/'+patent.Record.company+'/'+patent.Record.hash+'/'+patent.Record.filename)" src="../../assets/download.png" id="downloadImg"style="width:44px;height:44px" alt="download">
 
         </p>
         
-        <button class="btn btn-success" (click)="validatePatent(patent)">Validate patent</button>
+        <button class="btn btn-success" (click)="validatePatent(patent.Record)">Validate patent</button>
       </div>
     </ul>    <div class="text-center">
     <button class="btn btn-primary text-center bg-info" type="input" (click)="getPatents()">Get Patents</button></div>

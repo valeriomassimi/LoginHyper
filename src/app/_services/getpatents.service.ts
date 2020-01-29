@@ -5,7 +5,16 @@ import { AlertService } from './alert.service';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+
+
+const blockchain = {
+  "channel": "samplech",
+  "chaincode": "patent",
+  "method": "",
+  "chaincodeVer": "1.0",
+  "args": [""]
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +26,18 @@ export class GetpatentsService {
   constructor(private http: HttpClient,
   ) { }
 
-  getPatents(validator:string):Observable<Patent[]>{
-     return this.http.get<Patent[]>(environment.apiUrl + '/queryall/'+validator)
-    
+  getPatents(): Observable<Patent[]> {
+    blockchain.method="queryAllPatents"
+    blockchain.args=[""]
+    return this.http.post<Patent[]>(environment.apiUrl+"/query", blockchain)
+
   };
 
   validatePatent(patent: Patent) {
     console.log(patent)
-    return this.http.put(environment.apiUrl + "/validatepatent/", patent)
+    blockchain.method = "validatePatent"
+    blockchain.args = [patent.company + "_" + patent.description + "_" + patent.name]
+    return this.http.post(environment.apiUrl + "/invocation", blockchain)
 
   }
 

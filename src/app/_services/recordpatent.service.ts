@@ -4,11 +4,16 @@ import { HttpClient } from '@angular/common/http'
 import { AlertService } from './alert.service';
 import { Patent } from "@/_models";
 
-import {  User} from "@/_models";
-import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+
+
+ let blockchain={
+  "channel":  "samplech",
+  "chaincode":  "patent",
+  "method":  "recordPatent",
+  "chaincodeVer":  "1.0",
+  "args":  [""]
+    }
 
 
 @Injectable({
@@ -23,8 +28,10 @@ export class RecordpatentService {
 
   recordPatent(patent: Patent) {
 
+    blockchain.args=[patent.company+"_"+patent.description+"_"+patent.name,patent.company,patent.name,patent.description,patent.fileInfo,patent.fileName];
+
     console.log(JSON.stringify(patent));
-    return this.http.post(environment.apiUrl + "/recordpatent/",patent)
+    return this.http.post(environment.apiUrl + "/invocation",blockchain)
   }
 
 }

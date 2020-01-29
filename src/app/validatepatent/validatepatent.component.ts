@@ -2,16 +2,13 @@ import { Component, OnInit } from '@angular/core';
 
 import { GetpatentsService } from '../_services/getpatents.service'
 import { AlertService, AuthenticationService } from "@/_services";
-import { Patent } from '../_models'
+import { Patent } from '../_models';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { saveAs } from 'file-saver';
 import { DomSanitizer } from '@angular/platform-browser';
-
-
 
 @Component({
   selector: 'app-validatepatent',
@@ -19,8 +16,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./validatepatent.component.css']
 })
 export class ValidatepatentComponent implements OnInit {
-
-
 
   patent = new Patent('', '', '', false, "");
 
@@ -33,7 +28,6 @@ export class ValidatepatentComponent implements OnInit {
   downloadURL: string
   profileUrl: Observable<Blob | null>;
   fileUrl;
-  //fileFirestore:Observable
 
   constructor(private patentService: GetpatentsService,
     private alertService: AlertService,
@@ -47,9 +41,6 @@ export class ValidatepatentComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrUser()
-    this.patents.map(Record => {
-
-    })
   }
 
   getCurrUser() {
@@ -57,11 +48,12 @@ export class ValidatepatentComponent implements OnInit {
 
   }
 
-  getPatents(validator: string) {
-    validator = this.validator
-    this.patentService.getPatents(validator)
+  getPatents() {
+    this.patentService.getPatents()
       .subscribe(res => {
-        this.patents = res
+        console.log(res);     
+        this.patents=JSON.parse(res["result"]["payload"])
+   
         console.log(this.patents)
         this.pressed = true
       })
@@ -74,29 +66,32 @@ export class ValidatepatentComponent implements OnInit {
 
   //download the file corresponding to the patent from fireabse storage to local
   downloadFile(path: string) {
-    console.log(path);
-
+  
     const ref = this.storage.ref(path);
     ref.getDownloadURL().subscribe(
       file => {
-        window.open(file,"_blank")
+        window.open(file, "_blank")
 
+      },
+      error=>{
+        this.alertService.error("Immagine non trovata")
       }
 
     );
   }
 
   validatePatent(patent: Patent) {
-    patent.username = this.validator
+    console.log("paten: "+patent.company);
+    
     this.patentService.validatePatent(patent)
       .subscribe(
 
         data => {
           console.log('succes', data);
           this.alertService.success('Patent validated', true)
-          this.getPatents(patent.username)
+          this.getPatents()
           this.router.navigateByUrl('');
-          this.getPatents(patent.username)
+          this.getPatents()
         },
 
         error => {

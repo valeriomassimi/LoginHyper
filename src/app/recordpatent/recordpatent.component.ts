@@ -61,15 +61,7 @@ export class RecordpatentComponent implements OnInit {
 
   }
 
-  // handle file upload 
 
-  // handle file  on click
-  // clickUpload(file: File) {
-  //   //this.file=file
-  //   console.log(file.name)
-  //   this.fileInfo = (hash.sha256().update(file.name + file.lastModified + file.type).digest('hex'))
-  //   this.fileUp = true
-  // }
 
   clickUpload(files: FileList) {
     for (let i = 0; i < files.length; i++) {
@@ -87,13 +79,6 @@ export class RecordpatentComponent implements OnInit {
     this.isHovering = event;
   }
 
-  // onDrop(file: File) {
-  //   console.log(file.name)
-  //   //this.file = file
-  //   this.fileInfo = (hash.sha256().update(file.name + file.lastModified + file.type).digest('hex'))
-
-  //   this.fileUp = true
-  // }
 
   onDrop(files: FileList) {
     for (let i = 0; i < files.length; i++) {
@@ -103,10 +88,7 @@ export class RecordpatentComponent implements OnInit {
       this.fileInfo = (hash.sha256().update(files.item(i).name + files.item(i).lastModified + files.item(i).type).digest('hex'))
       this.fileUp=true
     }
-
-
   }
-
   //register the patent on hyperldger
 
   async recordPatent(patentModel) {
@@ -129,7 +111,7 @@ export class RecordpatentComponent implements OnInit {
         },
         error => {
           console.error('eroro', error);
-          this.alertService.error(error)
+          this.alertService.error("the patent wasnt added succesfully.check your fields again")
           this.patentForm.resetForm()
         }
       )
