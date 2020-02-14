@@ -1,9 +1,9 @@
-<div class="container mx mx-auto p-2" style="width: 60rem;margin-top: 4rem;">
+<div class="container mx mx-auto p-2" style="width: 60rem;margin-top: 4rem;margin-bottom: 2rem;">
   <div class="card" style="border-radius:4px;border-width: 4px;padding: 15px;">
 
     <div class="card-body">
       <div class="card-title">
-        <h2>User Operation</h2>
+        <h2>{{title}}</h2>
         <p>Use this form to insert your patent information and upload the corresponding file</p>
       </div>
 
@@ -14,7 +14,7 @@
             id="company">
         </div>
         <div class="form-group">
-          <label>PatentName</label>
+          <label>{{type}}</label>
           <input name="name" type="text" class="form-control" [(ngModel)]="patentModel.name" required id="name">
         </div>
         <div class=form-group>
@@ -49,13 +49,6 @@
           </div>
           <p *ngIf="percentage | async as pct">{{pct | number}}% - {{file.name |async}}</p>
         </div>
-
-        <!-- <p *ngIf=fileUp>File Uploads</p>
-          <div *ngFor="let file of files">
-            <upload-task [file]="file"></upload-task>
-          </div>
-   -->
-        <!-- -->
 
         <div class="text-center">
           <button class="btn btn-primary text-center bg-info " style="margin-bottom:15px;margin-top:15px"

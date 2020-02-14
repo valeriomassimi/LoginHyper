@@ -18,7 +18,11 @@
 
         <p class="pl-3">{{patent.Record.description}}</p>
 
-        <p class="pl-3">#: {{patent.Record.hash}}</p>
+        <p class="pl-3">Type: {{patent.Record.type}}</p>
+
+        <p class="pl-3">File #: {{patent.Record.hash}}</p>
+ 
+        
 
         <p class="pl-3">fileName: {{patent.Record.filename}}
           <img class="ml-5 pl-3 pt-2 pb-2" (click)="downloadFile('patents/'+patent.Record.company+'/'+patent.Record.hash+'/'+patent.Record.filename)" src="../../assets/download.png" id="downloadImg"style="width:44px;height:44px" alt="download">

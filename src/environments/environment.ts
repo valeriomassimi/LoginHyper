@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   username:"customertenant@oracle.com",
   password:"welcome1",
-  apiUrl:"https://140.238.221.127:6018/restproxy1/bcsgw/rest/v1/transaction",
+  apiUrl:"https://140.238.221.127:7018/restproxy1/bcsgw/rest/v1/transaction",
   firebaseConfig: {
     apiKey: "AIzaSyBwnCZcM08Z_iDRGEbXEpOlCi82N_vnok8",
     authDomain: "fire-85137.firebaseapp.com",

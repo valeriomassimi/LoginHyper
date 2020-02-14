@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http'
 
 import { AlertService } from './alert.service';
 import { Patent } from "@/_models";
+import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
 
  let blockchain={
-  "channel":  "samplech",
+  "channel":  "patentchannel",
   "chaincode":  "patent",
   "method":  "recordPatent",
   "chaincodeVer":  "1.0",
@@ -24,11 +25,18 @@ export class RecordpatentService {
   
   constructor(private http: HttpClient,
     ) { }
+  
+    private selectedType = new BehaviorSubject<String>("");
+    currentSelected = this.selectedType.asObservable();
+
+    changeSelectedType(type: String) {
+      this.selectedType.next(type);
+    }
 
 
   recordPatent(patent: Patent) {
 
-    blockchain.args=[patent.company+"_"+patent.description+"_"+patent.name,patent.company,patent.name,patent.description,patent.fileInfo,patent.fileName];
+    blockchain.args=[patent.company,patent.name,patent.description,patent.fileInfo,patent.fileName,patent.type];
 
     console.log(JSON.stringify(patent));
     return this.http.post(environment.apiUrl + "/invocation",blockchain)

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 
 
 const blockchain = {
-  "channel": "samplech",
+  "channel": "patentchannel",
   "chaincode": "patent",
   "method": "",
   "chaincodeVer": "1.0",

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+// import { } from "";
+import { RecordpatentService } from '@/_services';
 
 @Component({
   selector: 'app-recordpatentselect',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecordpatentselectComponent implements OnInit {
 
-  constructor() { }
+  constructor(private patentService: RecordpatentService) { }
 
   ngOnInit() {
+  }
+
+  selectType(type: String) {
+    this.patentService.changeSelectedType(type)
+
   }
 
 }

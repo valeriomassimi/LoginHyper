@@ -21,12 +21,14 @@ export class RecordpatentComponent implements OnInit {
 
   isHovering: boolean;
 
+  title:string="Registration of INVENTION DISCLOSURE FORM";
+  type:string="IDF";
   files: File[] = [];
   fileUp: boolean = false;
-  recordPressed:boolean=false;
+  recordPressed: boolean = false;
   fileInfo: string;
   file: File;
-  loading:boolean;
+  loading: boolean;
 
 
   //upload related variables
@@ -50,7 +52,26 @@ export class RecordpatentComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.patentService.currentSelected.subscribe(result => {
+      if(result){
+      this.type=result.toString();
+      console.log(this.type);
+
+      if(this.type=="IDF"){
+        this.title="Registration of INVENTION DISCLOSURE FORM";
+      }
+      else if(this.type=="INTERNAL ID"){
+        this.title="Registration of AUTHORIZATION OF REQUEST PREPARATION";
+      }
+      else if(this.type=="DOCS #"){
+        this.title="Registration of AUTHORIZATION TO FORWARD REQUEST TO EPO";
+      }
+}
+    }).unsubscribe();
+
+
+  }
 
   upload() {
     console.log("evento");
@@ -69,7 +90,7 @@ export class RecordpatentComponent implements OnInit {
       this.files.push(files.item(i));
       this.file = files[i]
       this.fileInfo = (hash.sha256().update(files.item(i).name + files.item(i).lastModified + files.item(i).type).digest('hex'))
-      this.fileUp=true
+      this.fileUp = true
     }
   }
 
@@ -87,27 +108,31 @@ export class RecordpatentComponent implements OnInit {
       this.file = files[i]
       console.log(this.file);
       this.fileInfo = (hash.sha256().update(files.item(i).name + files.item(i).lastModified + files.item(i).type).digest('hex'))
-      this.fileUp=true
+      this.fileUp = true
     }
   }
   //register the patent on hyperldger
 
   async recordPatent(patentModel) {
 
-    this.loading=true;
-    
+    this.loading = true;
+
     patentModel.username = await this.getCurrUser()
     patentModel.fileInfo = this.fileInfo
-    patentModel.fileName=this.file.name;
-  
+    patentModel.fileName = this.file.name;
+    patentModel.type= this.type;
+
+    console.log(patentModel);
+    
+
     this.patentService.recordPatent(patentModel)
       .subscribe(
         data => {
-          this.recordPressed=true
+          this.recordPressed = true
           this.startUpload().subscribe(() => {
             this.alertService.success('Patent added', true)
             this.router.navigate(['']);
-            this.loading=false
+            this.loading = false
             this.patentForm.resetForm();
             console.log('succes', data);
           })
@@ -115,14 +140,14 @@ export class RecordpatentComponent implements OnInit {
         },
         error => {
           console.error('eroro', error);
-          this.alertService.error("the patent was not added succesfully.check your connection")
-          this.loading=false
+          this.alertService.error("the patent was not added succesfully. Check your connection")
+          this.loading = false
           this.patentForm.resetForm()
         }
       )
   };
 
-   startUpload():Observable<any> {
+  startUpload(): Observable<any> {
 
     this.hash = hash.sha256().update(this.file.name + this.file.lastModified + this.file.type).digest('hex')
 
@@ -143,7 +168,7 @@ export class RecordpatentComponent implements OnInit {
         console.log("downloadurl", this.downloadURL);
 
         this.db.collection('patents').add({ downloadURL: this.downloadURL, fileName: this.file.name, path }).catch(error => { console.error(error) })
-       setTimeout(()=>this.recordPressed = false,7000)
+        setTimeout(() => this.recordPressed = false, 7000)
       })
 
     );
