@@ -28,6 +28,7 @@ import { HeaderComponent } from './_components/header/header.component';
 import { DropzoneDirective } from './_directives/dropzone.directive';
 import { UploadTaskComponent } from './upload-task/upload-task.component';
 import { environment } from 'environments/environment';
+import { RecordpatentselectComponent } from './recordpatentselect/recordpatentselect.component';
 export const firebaseConfig=environment.firebaseConfig
 
 @NgModule({
@@ -56,7 +57,8 @@ export const firebaseConfig=environment.firebaseConfig
         HeaderComponent,
         //DialogComponent,
         UploadTaskComponent,
-        DropzoneDirective
+        DropzoneDirective,
+        RecordpatentselectComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

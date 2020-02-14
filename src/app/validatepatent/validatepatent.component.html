@@ -10,7 +10,7 @@
  <h5 *ngIf="pressed && patents.length==0" class="p-3 text-center">No patents available!</h5>
     <ul *ngFor="let patent of patents" style="padding-left: 0;">
      
-      <div *ngIf="!patent.Record.validation"class="card" style="border-radius:5px">
+      <div class="card" style="border-radius:5px">
 
         <h3 class="card-title card-primary text-center">{{patent.Record.name| uppercase}}</h3>
 

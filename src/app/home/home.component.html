@@ -1,3 +1,3 @@
 <!-- <app-alert></app-alert> -->
 <app-validatepatent *ngIf="currentUser.role.match('validator')"></app-validatepatent>
-<app-recordpatent *ngIf="currentUser.role.match( 'user')"></app-recordpatent>
+<app-recordpatentselect *ngIf="currentUser.role.match('user')"></app-recordpatentselect>

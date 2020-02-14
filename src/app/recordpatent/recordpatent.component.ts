@@ -26,6 +26,7 @@ export class RecordpatentComponent implements OnInit {
   recordPressed:boolean=false;
   fileInfo: string;
   file: File;
+  loading:boolean;
 
 
   //upload related variables
@@ -92,6 +93,8 @@ export class RecordpatentComponent implements OnInit {
   //register the patent on hyperldger
 
   async recordPatent(patentModel) {
+
+    this.loading=true;
     
     patentModel.username = await this.getCurrUser()
     patentModel.fileInfo = this.fileInfo
@@ -104,6 +107,7 @@ export class RecordpatentComponent implements OnInit {
           this.startUpload().subscribe(() => {
             this.alertService.success('Patent added', true)
             this.router.navigate(['']);
+            this.loading=false
             this.patentForm.resetForm();
             console.log('succes', data);
           })
@@ -111,7 +115,8 @@ export class RecordpatentComponent implements OnInit {
         },
         error => {
           console.error('eroro', error);
-          this.alertService.error("the patent wasnt added succesfully.check your fields again")
+          this.alertService.error("the patent was not added succesfully.check your connection")
+          this.loading=false
           this.patentForm.resetForm()
         }
       )

@@ -10,15 +10,17 @@ import { ValidatepatentComponent } from './validatepatent/validatepatent.compone
 import { ProfilesComponent } from './profiles/profiles.component';
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard],
+    {
+        path: '', component: HomeComponent, canActivate: [AuthGuard],
     /*children:[
         {path:'record',component:RecordpatentComponent},
         {path:'validate',component:ValidatepatentComponent}]
 
 },*/},
+    { path: 'record', component: RecordpatentComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path:'profiles',component:ProfilesComponent},
+    { path: 'profiles', component: ProfilesComponent },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
