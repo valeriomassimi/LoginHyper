@@ -36,7 +36,7 @@ export class GetpatentsService {
   validatePatent(patent: Patent) {
     console.log(patent)
     blockchain.method = "validatePatent"
-    blockchain.args = [patent.company + "_" + patent.description + "_" + patent.name]
+    blockchain.args = [patent.company + "_" + patent.name + "_" + patent.description]
     return this.http.post(environment.apiUrl + "/invocation", blockchain)
 
   }
